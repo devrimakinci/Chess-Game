@@ -16,4 +16,5 @@ Terminal üzerinden make yaparak kodu derleyebilirsiniz. <br />
 Beyaz Taş -> Terminaldeki board üzerindeki büyük harfler <br />
 Siyah Taş -> Terminaldeki board üzerindeki küçük harfler
 
+### Oynanış Şekli
 Örnek oynanış şekli SampleGame.txt adlı dosyadadır.
