@@ -1,11 +1,11 @@
-Chess Game
+#Chess Game
 
-Nasıl Çalıştırılır
+###Nasıl Çalıştırılır
 
 Terminal üzerinden make yaparak kodu derleyebilirsiniz.
 ./ChessGame ile oyunu açabilirsiniz.
 
-Taşlar
+###Taşlar
 P -> Piyon
 R -> Kale
 N -> At
