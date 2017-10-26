@@ -1,0 +1,263 @@
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p p p p p p p p|
+6|               |
+5|               |
+4|               |
+3|               |
+2|P P P P P P P P|
+1|R N B Q K B N R|
+  - - - - - - - -
+White player move > e2 e3
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p p p p p p p p|
+6|               |
+5|               |
+4|               |
+3|        P      |
+2|P P P P   P P P|
+1|R N B Q K B N R|
+  - - - - - - - -
+Black player move > b2 b3
+Illegal piece. 
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p p p p p p p p|
+6|               |
+5|               |
+4|               |
+3|        P      |
+2|P P P P   P P P|
+1|R N B Q K B N R|
+  - - - - - - - -
+Black player move > d7 d6
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p p p   p p p p|
+6|      p        |
+5|               |
+4|               |
+3|        P      |
+2|P P P P   P P P|
+1|R N B Q K B N R|
+  - - - - - - - -
+White player move > d1 f3
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p p p   p p p p|
+6|      p        |
+5|               |
+4|               |
+3|        P Q    |
+2|P P P P   P P P|
+1|R N B   K B N R|
+  - - - - - - - -
+Black player move > b7 b6
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p   p   p p p p|
+6|  p   p        |
+5|               |
+4|               |
+3|        P Q    |
+2|P P P P   P P P|
+1|R N B   K B N R|
+  - - - - - - - -
+White player move > f3 c6
+Check!
+   a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p   p   p p p p|
+6|  p Q p        |
+5|               |
+4|               |
+3|        P      |
+2|P P P P   P P P|
+1|R N B   K B N R|
+  - - - - - - - -
+Black player move > b6 b5
+Your king is in check!
+  a b c d e f g h
+  - - - - - - - -
+8|r n b q k b n r|
+7|p   p   p p p p|
+6|  p Q p        |
+5|               |
+4|               |
+3|        P      |
+2|P P P P   P P P|
+1|R N B   K B N R|
+  - - - - - - - -
+Black player move > b6 b5
+Your king is in check!
+White player WINS!
+
+
+num=kingLeftDownCrossEmpty(board,i,j);
+				num2=(board[j]=='B'||board[j]=='Q');
+
+
+#include <stdio.h>
+#define BOARD_SIZE 8
+#define SUCCESS 1
+#define FAIL 0
+
+char getPlayer (char *board, char sc, int sr);
+int isBlack (char currPlayer);
+int isWhite (char currPlaye);
+int makeMove(char *board, char sc, int sr, char tc, int tr);
+int colSearch (char *arr, int size, char item);
+int rowSearch (int *arr, int size, int item);
+
+int main() 
+{
+    char board [BOARD_SIZE*BOARD_SIZE], empty;
+    int player = 1; /* 1 white, 0 black */
+    char sc,tc; /* source/target cols */
+    int sr,tr; /* source/target rows */
+    int moveStatus = 0;
+    int checkStatus = 0;
+    char currPlayer;
+
+    initBoard(board);
+
+    do {
+        printBoard(board);
+        printf("%s player move > ", player ? "White" : "Black");
+        getPosition(&sc,&sr);
+        scanf("%c", &empty);
+        getPosition(&tc,&tr);
+        scanf("%c", &empty);
+        currPlayer = getPlayer(board, sc,sr);
+
+        if(!isValidCell(sc,sr)) {
+            printf("Source position is invalid\n");
+            continue;
+        }
+        if(!isValidCell(tc,tr)) {
+            printf("Target position is invalid\n");
+            continue;
+        }
+        if((isBlack(currPlayer) && player) ||
+           (isWhite(currPlayer) && !player)) {
+            printf("Illegal piece. \n");
+            continue;
+        }
+
+        moveStatus = makeMove(board,sc,sr,tc,tr);
+        switch(moveStatus) {
+            case 0:
+                printf("Invalid move!\n");
+                break;
+            case 1:
+                printf("Your king is in check!\n");
+                ++checkStatus;
+                break;
+            case 3:
+                printf("Check!\n ");
+            case 2:
+                player = !player;
+                checkStatus = 0;
+                break;
+        }
+    } while(checkStatus < 2);
+    printf("%s player WINS!\n", player ? "Black" : "White");
+    return 0;
+}
+
+char getPlayer (char board, char sc, int sr)
+{
+	char col [BOARD_SIZE]={'a','b','c','d','e','f','g','h'},player;
+	int row [BOARD_SIZE]={8,7,6,5,4,3,2,1},sourceX,sourceY;
+	sourceX=rowSearch (row,SIZE,sr);
+	sourceY=colSearch (col,SIZE,sc);
+	src=(sourceX*SIZE)+sourceY;
+	player=board[src];
+	return player;
+}
+
+int isBlack (char currPlayer)
+{
+	if ((currPlayer=='r')||(currPlayer=='n')||(currPlayer=='b')||
+		(currPlayer=='q')||(currPlayer=='k')||(currPlayer=='p'))
+		return SUCCESS;
+	return FAIL;
+}
+
+int isWhite (char currPlayer)
+{
+	if ((currPlayer=='R')||(currPlayer=='N')||(currPlayer=='B')||
+		(currPlayer=='Q')||(currPlayer=='K')||(currPlayer=='P'))
+		return SUCCESS;
+	return FAIL;
+}
+
+int makeMove(char *board, char sc, int sr, char tc, int tr)
+{
+	char col [SIZE]={'a','b','c','d','e','f','g','h'};
+	int row [SIZE]={8,7,6,5,4,3,2,1},sourceX,sourceY,targetX,targetY,src,trgt,
+	checkStatus;
+	sourceX=rowSearch (row,SIZE,sr);
+	sourceY=colSearch (col,SIZE,sc);
+	targetX=rowSearch (row,SIZE,tr);
+	targetY=colSearch (col,SIZE,tc);
+	src=(sourceX*SIZE)+sourceY;
+	trgt=(targetX*SIZE)+targetY;
+		if (isPieceMovable(board,sc,sr,tc,tr))
+		{
+			board[trgt]=board[src];
+			board[src]=' ';
+			return SUCCESS;
+		}
+		else
+			return FAIL;
+	return FAIL;
+}
+
+int colSearch (char *arr, int size, char item)
+{
+	int where,found,i;
+	found=0;
+	where=0;
+	for (i=0; i<size; i++)
+	{
+		if (arr[i]==item)
+		{
+			found=1;
+			if (found)
+			{
+				where=i;
+				return (where);
+			}
+		}
+	}
+	return (found);
+}
+
+int rowSearch (int *arr, int size, int item)
+{
+	int where,found,i;
+	found=0;
+	where=0;
+	for (i=0; i<size; i++)
+	{
+		if (arr[i]==item)
+		{
+			found=1;
+			if (found)
+			{
+				where=i;
+				return (where);
+			}
+		}
+	}
+	return (found);
+}
