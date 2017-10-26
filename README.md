@@ -2,7 +2,7 @@
 
 ### Nasıl Çalıştırılır
 
-Terminal üzerinden make yaparak kodu derleyebilirsiniz.
+Terminal üzerinden make yaparak kodu derleyebilirsiniz. <br />
 ./ChessGame ile oyunu açabilirsiniz.
 
 ### Taşlar
@@ -13,7 +13,7 @@ Terminal üzerinden make yaparak kodu derleyebilirsiniz.
 - Q -> Vezir
 - K -> Şah
 
-Beyaz Taş -> Terminaldeki board üzerindeki büyük harfler
+Beyaz Taş -> Terminaldeki board üzerindeki büyük harfler <br />
 Siyah Taş -> Terminaldeki board üzerindeki küçük harfler
 
 Örnek oynanış şekli SampleGame.txt adlı dosyadadır.
